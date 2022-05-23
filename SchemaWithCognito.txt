@@ -1,0 +1,153 @@
+type CovidVaccineInfo @aws_cognito_user_pools(cognito_groups: ["admin","readonly"])
+@aws_api_key {
+	id: ID!
+	vaccinetype: String!
+	dose: String!
+	bookingdate: String!
+	availableslots: String!
+	city: String!
+	venue: String!
+}
+
+type CovidVaccineInfoConnection {
+	items: [CovidVaccineInfo]
+		@aws_api_key
+@aws_cognito_user_pools(cognito_groups: ["admin","readonly"])
+	nextToken: String
+		@aws_api_key
+@aws_cognito_user_pools(cognito_groups: ["admin","readonly"])
+}
+
+input CreateCovidVaccineInfoInput {
+	vaccinetype: String!
+	dose: String!
+	bookingdate: String!
+	availableslots: String!
+	city: String!
+	venue: String!
+}
+
+input DeleteCovidVaccineInfoInput {
+	id: ID!
+}
+
+type Mutation {
+	createCovidVaccineInfo(input: CreateCovidVaccineInfoInput!): CovidVaccineInfo
+		@aws_cognito_user_pools(cognito_groups: ["admin"])
+	updateCovidVaccineInfo(input: UpdateCovidVaccineInfoInput!): CovidVaccineInfo
+		@aws_cognito_user_pools(cognito_groups: ["admin"])
+	deleteCovidVaccineInfo(input: DeleteCovidVaccineInfoInput!): CovidVaccineInfo
+		@aws_cognito_user_pools(cognito_groups: ["admin"])
+}
+
+type Query {
+	getSlots(id: ID!): CovidVaccineInfo
+		@aws_cognito_user_pools(cognito_groups: ["admin","readonly"])
+	getCovidVaccineInfo(id: ID!): CovidVaccineInfo
+		@aws_cognito_user_pools(cognito_groups: ["admin","readonly"])
+	listCovidVaccineInfos(filter: TableCovidVaccineInfoFilterInput, limit: Int, nextToken: String): CovidVaccineInfoConnection
+		@aws_api_key
+@aws_cognito_user_pools(cognito_groups: ["admin","readonly"])
+}
+
+type Subscription {
+	onCreateCovidVaccineInfo(
+		id: ID,
+		vaccinetype: String,
+		dose: String,
+		bookingdate: String,
+		availableslots: String
+	): CovidVaccineInfo
+		@aws_subscribe(mutations: ["createCovidVaccineInfo"])
+	onUpdateCovidVaccineInfo(
+		id: ID,
+		vaccinetype: String,
+		dose: String,
+		bookingdate: String,
+		availableslots: String
+	): CovidVaccineInfo
+		@aws_subscribe(mutations: ["updateCovidVaccineInfo"])
+	onDeleteCovidVaccineInfo(
+		id: ID,
+		vaccinetype: String,
+		dose: String,
+		bookingdate: String,
+		availableslots: String
+	): CovidVaccineInfo
+		@aws_subscribe(mutations: ["deleteCovidVaccineInfo"])
+}
+
+input TableBooleanFilterInput {
+	ne: Boolean
+	eq: Boolean
+}
+
+input TableCovidVaccineInfoFilterInput {
+	id: TableIDFilterInput
+	vaccinetype: TableStringFilterInput
+	dose: TableStringFilterInput
+	bookingdate: TableStringFilterInput
+	availableslots: TableStringFilterInput
+	city: TableStringFilterInput
+	venue: TableStringFilterInput
+}
+
+input TableFloatFilterInput {
+	ne: Float
+	eq: Float
+	le: Float
+	lt: Float
+	ge: Float
+	gt: Float
+	contains: Float
+	notContains: Float
+	between: [Float]
+}
+
+input TableIDFilterInput {
+	ne: ID
+	eq: ID
+	le: ID
+	lt: ID
+	ge: ID
+	gt: ID
+	contains: ID
+	notContains: ID
+	between: [ID]
+	beginsWith: ID
+}
+
+input TableIntFilterInput {
+	ne: Int
+	eq: Int
+	le: Int
+	lt: Int
+	ge: Int
+	gt: Int
+	contains: Int
+	notContains: Int
+	between: [Int]
+}
+
+input TableStringFilterInput {
+	ne: String
+	eq: String
+	le: String
+	lt: String
+	ge: String
+	gt: String
+	contains: String
+	notContains: String
+	between: [String]
+	beginsWith: String
+}
+
+input UpdateCovidVaccineInfoInput {
+	id: ID!
+	vaccinetype: String
+	dose: String
+	bookingdate: String
+	availableslots: String
+	city: String
+	venue: String
+}

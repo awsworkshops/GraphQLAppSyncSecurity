@@ -1,0 +1,25 @@
+type CovidVaccineInfo {
+	id: ID!	
+	vaccinetype: String!	
+	dose: String!	
+	bookingdate: String!
+	availableslots: String!	
+	city: String!	
+	venue: String!
+	}
+		
+type Query {
+	getSlots(id: ID!): CovidVaccineInfo
+}		
+
+mutation MyMutation {
+  createCovidVaccineInfo(input: {availableslots: "20", bookingdate: "30-Mar-2022", city: "Delhi", dose: "1", vaccinetype: "Covishield", venue: "Max Hospital"}) {
+    availableslots
+    bookingdate
+    city
+    dose
+    id
+    vaccinetype
+    venue
+  }
+}
